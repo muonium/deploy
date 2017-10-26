@@ -1,0 +1,3 @@
+# Deploy
+
+We use this script on our test server in order to allow developers to deploy the application without breaking anything.
