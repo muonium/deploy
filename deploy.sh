@@ -50,9 +50,11 @@ new_release(){
     local choice="";while test -z $choice;do read -p "Do you want to apply the template configuration files? (y|n)" choice;done
     if [[ $choice == "y" ]];then deploy -c && green_it "Successfully applied!" || err "Failed to apply template configuration files...";fi
     echo "Setting up permissions..."
-    umask 770 /var/www/html/core && ok_green || err "Failed to set up permission"
+    chmod 0770 /var/www/html/core && ok_green || err "Failed to set up permission"
 	git clone https://github.com/muonium/infra-scripts /var/www/html/core/cron&&
 	git clone https://github.com/muonium/admin-panel /var/www/html/core/cron/panel
+	chown -R www-data:www-data /var/www/html
+	chmod u+x /var/www/html/core/cron/deploy.sh
     green_it "Everything's good!"
 }
 
