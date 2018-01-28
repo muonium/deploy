@@ -50,7 +50,9 @@ new_release(){
     local choice="";while test -z $choice;do read -p "Do you want to apply the template configuration files? (y|n)" choice;done
     if [[ $choice == "y" ]];then deploy -c && green_it "Successfully applied!" || err "Failed to apply template configuration files...";fi
     echo "Setting up permissions..."
-    umask 770 /var/www/html/core && ok_green || err "Failed to set up permission" 
+    umask 770 /var/www/html/core && ok_green || err "Failed to set up permission"
+	git clone https://github.com/muonium/infra-scripts /var/www/html/core/cron&&
+	git clone https://github.com/muonium/admin-panel /var/www/html/core/cron/panel
     green_it "Everything's good!"
 }
 
@@ -176,7 +178,7 @@ case $k in
 	;;
     "--update-server"|"-u") update_server
 	;;
-    "edit") nano /opt/scripts/bin/deploy
+    "edit") nano /opt/bin/deploy
 	;;
     *)  usage
         ;;
